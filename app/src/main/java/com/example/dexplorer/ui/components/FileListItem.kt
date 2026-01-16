@@ -1,7 +1,8 @@
 package com.example.dexplorer.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FileListItem(
     file: FileItem,
@@ -46,7 +48,10 @@ fun FileListItem(
                     MaterialTheme.colorScheme.surface
                 }
             )
-            .clickable { onSelectionToggle() }
+            .combinedClickable(
+                onClick = onSelectionToggle,
+                onDoubleClick = onDoubleClick
+            )
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
