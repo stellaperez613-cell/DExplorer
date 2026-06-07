@@ -92,4 +92,5 @@ lint/tmp/
 .DS_Store
 
 # Windows
-Thumbs.db
+Thumbs.dbapks/
+apks/
