@@ -11,7 +11,8 @@ data class FileItem(
     val mimeType: String?,
     val extension: String?,
     val isHidden: Boolean = false,
-    val thumbnailUri: Uri? = null,
+    val thumbnailPath: String? = null,
+    val defaultAppIcon: android.graphics.Bitmap? = null,
     val folderPreviewUris: List<Uri> = emptyList(),
     val permissions: FilePermissions? = null
 )

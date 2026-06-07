@@ -1,10 +1,12 @@
 package com.example.dexplorer.data.model
 
 enum class ViewMode {
+    EXTRA_LARGE_ICONS,
+    LARGE_ICONS,
+    MEDIUM_ICONS,
+    SMALL_ICONS,
     LIST,
-    GRID_SMALL,
-    GRID_MEDIUM,
-    GRID_LARGE
+    DETAILS
 }
 
 enum class SortOption {

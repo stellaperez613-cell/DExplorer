@@ -18,31 +18,41 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun NewFolderDialog(
+fun NewFileDialog(
+    defaultName: String,
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var folderName by remember { mutableStateOf("New Folder") }
+    val extension = defaultName.substringAfterLast('.', "")
+    val nameWithoutExt = if (extension.isNotEmpty()) defaultName.dropLast(extension.length + 1) else defaultName
+    var fieldValue by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = defaultName,
+                selection = TextRange(0, nameWithoutExt.length)
+            )
+        )
+    }
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(Unit) {
-        focusRequester.requestFocus()
-    }
+    LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-        title = { Text("New Folder") },
+        title = { Text("New File") },
         text = {
             Column {
-                Text("Enter folder name:")
+                Text("Enter file name:")
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
-                    value = folderName,
-                    onValueChange = { folderName = it },
+                    value = fieldValue,
+                    onValueChange = { fieldValue = it },
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(focusRequester),
@@ -52,20 +62,12 @@ fun NewFolderDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = {
-                    if (folderName.isNotBlank()) {
-                        onConfirm(folderName)
-                    }
-                },
-                enabled = folderName.isNotBlank()
-            ) {
-                Text("Create")
-            }
+                onClick = { if (fieldValue.text.isNotBlank()) onConfirm(fieldValue.text.trim()) },
+                enabled = fieldValue.text.isNotBlank()
+            ) { Text("Create") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancel")
-            }
+            TextButton(onClick = onDismiss) { Text("Cancel") }
         }
     )
 }

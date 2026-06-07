@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.dexplorer.core.util.FileLogger
 import com.example.dexplorer.core.util.PermissionUtils
 import com.example.dexplorer.ui.screen.ExplorerScreen
 import com.example.dexplorer.ui.theme.DExplorerTheme
@@ -45,7 +46,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        FileLogger.init(this)
+        FileLogger.log("App started")
         hasPermissions = PermissionUtils.hasStoragePermissions(this)
 
         setContent {
